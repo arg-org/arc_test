@@ -10,7 +10,7 @@ env:
 
 jobs:
   build-and-push:
-    runs-on: [self-hosted, linux, hutom-runner]
+    runs-on: [self-hosted, arc-org]
 
     steps:
       - name: Checkout
