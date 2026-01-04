@@ -2,10 +2,13 @@ name: push-to-gar
 
 on:
   push:
-    branches: main
+    branches: ["main"]
 
 env:
   IMAGE_NAME: python-app
+  GAR_REGISTRY: asia-northeast3-docker.pkg.dev
+  GCP_PROJECT_ID: rs-2024-00460435-456102
+  GAR_REPOSITORY: hwgar
 
 
 jobs:
@@ -44,7 +47,7 @@ jobs:
         uses: docker/build-push-action@v6
         with:
           push: true
-          tags: user/app:latest
+          tags: ${{ env.GAR_REGISTRY }}/${{ env.GCP_PROJECT_ID }}/${{ env.GAR_REPOSITORY }}/${{ env.IMAGE_NAME }}:latest
 
 
 # name: CI Build & Push to GAR
