@@ -1,37 +1,37 @@
-name: CI Build & Push to Harbor
+# name: CI Build & Push to Harbor
 
-on:
-  push:
-    branches: ["main"]
-  workflow_dispatch:
+# on:
+#   push:
+#     branches: ["main"]
+#   workflow_dispatch:
 
-env:
-  IMAGE_NAME: python-app
+# env:
+#   IMAGE_NAME: python-app
 
-jobs:
-  build-and-push:
-    runs-on: [self-hosted, arc-org]
+# jobs:
+#   build-and-push:
+#     runs-on: [self-hosted, arc-org]
 
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v5
+#     steps:
+#       - name: Checkout
+#         uses: actions/checkout@v5
 
-      - name: Docker login to Harbor
-        run: |
-          echo "${{ secrets.HARBOR_PASSWORD }}" | docker login "${{ secrets.HARBOR_REGISTRY }}" \
-            -u "${{ secrets.HARBOR_USERNAME }}" --password-stdin
+#       - name: Docker login to Harbor
+#         run: |
+#           echo "${{ secrets.HARBOR_PASSWORD }}" | docker login "${{ secrets.HARBOR_REGISTRY }}" \
+#             -u "${{ secrets.HARBOR_USERNAME }}" --password-stdin
 
-      - name: Build image
-        run: |
-          docker build -t "${{ secrets.HARBOR_REGISTRY }}/${{ secrets.HARBOR_PROJECT }}/${{ env.IMAGE_NAME }}:${{ github.sha }}" .
+#       - name: Build image
+#         run: |
+#           docker build -t "${{ secrets.HARBOR_REGISTRY }}/${{ secrets.HARBOR_PROJECT }}/${{ env.IMAGE_NAME }}:${{ github.sha }}" .
 
-      - name: Push image
-        run: |
-          docker push "${{ secrets.HARBOR_REGISTRY }}/${{ secrets.HARBOR_PROJECT }}/${{ env.IMAGE_NAME }}:${{ github.sha }}"
+#       - name: Push image
+#         run: |
+#           docker push "${{ secrets.HARBOR_REGISTRY }}/${{ secrets.HARBOR_PROJECT }}/${{ env.IMAGE_NAME }}:${{ github.sha }}"
 
-      - name: Also tag & push latest (optional)
-        if: github.ref == 'refs/heads/main'
-        run: |
-          docker tag "${{ secrets.HARBOR_REGISTRY }}/${{ secrets.HARBOR_PROJECT }}/${{ env.IMAGE_NAME }}:${{ github.sha }}" \
-                    "${{ secrets.HARBOR_REGISTRY }}/${{ secrets.HARBOR_PROJECT }}/${{ env.IMAGE_NAME }}:latest"
-          docker push "${{ secrets.HARBOR_REGISTRY }}/${{ secrets.HARBOR_PROJECT }}/${{ env.IMAGE_NAME }}:latest"
+#       - name: Also tag & push latest (optional)
+#         if: github.ref == 'refs/heads/main'
+#         run: |
+#           docker tag "${{ secrets.HARBOR_REGISTRY }}/${{ secrets.HARBOR_PROJECT }}/${{ env.IMAGE_NAME }}:${{ github.sha }}" \
+#                     "${{ secrets.HARBOR_REGISTRY }}/${{ secrets.HARBOR_PROJECT }}/${{ env.IMAGE_NAME }}:latest"
+#           docker push "${{ secrets.HARBOR_REGISTRY }}/${{ secrets.HARBOR_PROJECT }}/${{ env.IMAGE_NAME }}:latest"
