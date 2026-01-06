@@ -8,11 +8,11 @@ spec:
   replicas: {{ .Values.replicaCount | default 1 }}
   selector:
     matchLabels:
-      {{ include "pythonapp.labels" . | nindent 4 }}
+      {{ include "pythonapp.labels" . | nindent 6 }}
   template:
     metadata:
       labels:
-        {{ include "pythonapp.labels" . | nindent 4 }}
+        {{ include "pythonapp.labels" . | nindent 8 }}
     spec:
       containers:
         - name: {{ .Chart.Name }}
