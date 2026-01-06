@@ -9,6 +9,6 @@ metadata:
     app: {{ .Release.Name }}
 spec:
   domains:
-    - {{ .Values.ingress.tls.domain | quote }}
+    - {{ .Values.env.certName | quote }}
 {{- end }}
 {{- end }}
