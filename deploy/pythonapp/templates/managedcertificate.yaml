@@ -1,14 +1,9 @@
-{{- if .Values.ingress.enabled }}
-{{- $certName := index .Values.ingress.annotations "networking.gke.io/managed-certificates" | default "" -}}
-{{- if $certName }}
 apiVersion: networking.gke.io/v1
 kind: ManagedCertificate
 metadata:
-  name: {{ $certName }}
+  name: {{ .Values.env.certName }}
   labels:
     app: {{ .Release.Name }}
 spec:
   domains:
-    - {{ .Values.env.certName | quote }}
-{{- end }}
-{{- end }}
+    - {{ .Values.env.domain }}

@@ -1,3 +1,4 @@
 env:
   ENV: prod
   certName: pythonapp-prod-cert
+  domain: hw-prod.duckdns.org

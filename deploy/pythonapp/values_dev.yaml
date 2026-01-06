@@ -1,3 +1,4 @@
 env:
   ENV: dev
   certName: pythonapp-dev-cert
+  domain: hw-dev.duckdns.org
