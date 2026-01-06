@@ -22,12 +22,10 @@ spec:
             - name: http
               containerPort: {{ .Values.service.port | default 80 }}
               protocol: TCP
-          {{- if .Values.env }}
           env:
-            {{- with .Values.env }}
+            {{ if .Values.env }}
             - name: ENV
-              value: {{ .ENV | default "unknown" | quote }}
-            {{- end }}
+              value: {{ .Values.env.ENV | default "unknown" | quote }}
+            {{ end }}
             - name: IMAGE
-              value: {{ printf "%s:%s" $.Values.image.repository $.Values.image.tag | quote }}
-          {{- end }}
+              value: {{ printf "%s:%s" .Values.image.repository .Values.image.tag | quote }}
