@@ -12,7 +12,7 @@ spec:
     helm:
       valueFiles:
         - values.yaml
-        - ../../environments/dev/pythonapp.yaml
+        - values-dev.yaml
   destination:
     server: https://kubernetes.default.svc
     namespace: pythonapp-dev
