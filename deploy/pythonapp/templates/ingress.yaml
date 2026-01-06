@@ -9,7 +9,8 @@ metadata:
     
 spec:
   rules:
-  - http:
+  - host: {{ .Values.env.domain }}
+    http:
       paths:
       - path: /
         pathType: Prefix
