@@ -1,18 +1,15 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "pythonapp.fullname" . }}
-  labels:
-    app: {{ .Release.Name }}
+  name: {{ .Release.Name }}
+  labels: {{ .Release.Name }}
 spec:
   replicas: {{ .Values.replicaCount | default 1 }}
   selector:
-    matchLabels:
-      {{- include "pythonapp.selectorLabels" . | nindent 6 }}
+    matchLabels: {{ .Release.Name }}
   template:
     metadata:
-      labels:
-        {{- include "pythonapp.labels" . | nindent 8 }}
+      labels: {{ .Release.Name }}
     spec:
       containers:
         - name: {{ .Chart.Name }}
