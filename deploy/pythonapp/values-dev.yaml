@@ -1,4 +1,5 @@
 env:
   ENV: dev
+  staticIpName: test-static-ip
   certName: pythonapp-dev-cert
   domain: hw-dev.duckdns.org

@@ -1,4 +1,5 @@
 env:
   ENV: prod
+  staticIpName: prod-static-ip
   certName: pythonapp-prod-cert
   domain: hw-prod.duckdns.org
