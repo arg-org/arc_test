@@ -47,55 +47,5 @@ jobs:
         uses: docker/build-push-action@v6
         with:
           push: true
-          tags: ${{ env.GAR_REGISTRY }}/${{ env.GCP_PROJECT_ID }}/${{ env.GAR_REPOSITORY }}/${{ env.IMAGE_NAME }}:0105T0910
+          tags: ${{ env.GAR_REGISTRY }}/${{ env.GCP_PROJECT_ID }}/${{ env.GAR_REPOSITORY }}/${{ env.IMAGE_NAME }}:dev-0106T1553
 
-
-# name: CI Build & Push to GAR
-
-# on:
-#   push:
-#     branches: ["main"]
-#   workflow_dispatch:
-
-# env:
-#   IMAGE_NAME: python-app
-
-# jobs:
-#   build-and-push:
-#     runs-on: [self-hosted, arc-org]
-
-#     steps:
-#       - name: Checkout
-#         uses: actions/checkout@v5
-
-#       # GCP 인증
-#       - name: Authenticate to Google Cloud
-#         uses: google-github-actions/auth@v2
-#         with:
-#           credentials_json: ${{ secrets.GCP_SA_KEY }}
-
-      # # gcloud & docker 인증 설정
-      # - name: Configure Docker for GAR
-      #   run: |
-      #     gcloud auth configure-docker \
-      #       ${{ secrets.GAR_LOCATION }}-docker.pkg.dev --quiet
-
-      # - name: Build image
-      #   run: |
-      #     docker build -t \
-      #       ${{ secrets.GAR_LOCATION }}-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/${{ secrets.GAR_REPOSITORY }}/${{ env.IMAGE_NAME }}:${{ github.sha }} .
-
-      # - name: Push image
-      #   run: |
-      #     docker push \
-      #       ${{ secrets.GAR_LOCATION }}-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/${{ secrets.GAR_REPOSITORY }}/${{ env.IMAGE_NAME }}:${{ github.sha }}
-
-      # - name: Also tag & push latest
-      #   if: github.ref == 'refs/heads/main'
-      #   run: |
-      #     docker tag \
-      #       ${{ secrets.GAR_LOCATION }}-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/${{ secrets.GAR_REPOSITORY }}/${{ env.IMAGE_NAME }}:${{ github.sha }} \
-      #       ${{ secrets.GAR_LOCATION }}-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/${{ secrets.GAR_REPOSITORY }}/${{ env.IMAGE_NAME }}:latest
-
-      #     docker push \
-      #       ${{ secrets.GAR_LOCATION }}-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/${{ secrets.GAR_REPOSITORY }}/${{ env.IMAGE_NAME }}:latest
