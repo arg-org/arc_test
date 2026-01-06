@@ -47,5 +47,21 @@ jobs:
         uses: docker/build-push-action@v6
         with:
           push: true
-          tags: ${{ env.GAR_REGISTRY }}/${{ env.GCP_PROJECT_ID }}/${{ env.GAR_REPOSITORY }}/${{ env.IMAGE_NAME }}:dev-0106T1553
+          tags: ${{ env.GAR_REGISTRY }}/${{ env.GCP_PROJECT_ID }}/${{ env.GAR_REPOSITORY }}/${{ env.IMAGE_NAME }}:${{ github.sha }}
+      
+      - name: Update image tag
+        run: |
+          FILE="deploy/pythonapp/values.yaml"
+          sed -i -E "s/^(\s*tag:\s*).*/\1\"${GITHUB_SHA}\"/g" "$FILE"
+          echo "Updated $FILE:"
+          grep -n "tag:" "$FILE" | head -n 5
+
+      - name: Commit and push
+        run: |
+          git config user.name "github-actions"
+          git config user.email "actions@github.com"
+          git add deploy/pythonapp/values.yaml
+          git commit -m "chore(deploy): bump image tag to ${GITHUB_SHA}" || echo "No changes to commit"
+          git push
+
 
