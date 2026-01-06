@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: {{ include "pythonapp.fullname" . }}
   labels:
-    {{- include "pythonapp.labels" . | nindent 4 }}
+    app: {{ .Release.Name }}
 spec:
   replicas: {{ .Values.replicaCount | default 1 }}
   selector:
