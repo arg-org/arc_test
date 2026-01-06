@@ -1,16 +1,21 @@
-{{- if .Values.ingress.enabled -}}
+{{ if .Values.ingress.enabled -}}
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: {{ .Values.ingress.name | default (printf "%s-ingress" .Release.Name) }}
-  {{- with .Values.ingress.annotations }}
+  {{ with .Values.ingress.annotations }}
   annotations:
-    {{- toYaml . | nindent 4 }}
-  {{- end }}
+    {{ toYaml . | nindent 4 }}
+  {{ end }}
 spec:
-  defaultBackend:
-    service:
-      name: {{ .Values.ingress.defaultBackend.service.name | quote }}
-      port:
-        number: {{ .Values.ingress.defaultBackend.service.port.number }}
-{{- end }}
+  rules:
+  - http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: {{ .Values.ingress.backend.service.name | quote }}
+            port:
+              number: {{ .Values.ingress.backend.service.port.number }}
+{{ end }}
