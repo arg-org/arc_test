@@ -2,22 +2,25 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: {{ .Release.Name }}
-  labels: {{ .Release.Name }}
+  labels:
+    app: {{ .Release.Name }}
 spec:
   replicas: {{ .Values.replicaCount | default 1 }}
   selector:
-    matchLabels: {{ .Release.Name }}
+    matchLabels:
+      app: {{ .Release.Name }}
   template:
     metadata:
-      labels: {{ .Release.Name }}
+      labels:
+        app: {{ .Release.Name }}
     spec:
       containers:
         - name: {{ .Chart.Name }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
-          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          imagePullPolicy: {{ .Values.image.pullPolicy | default "IfNotPresent" }}
           ports:
             - name: http
-              containerPort: {{ .Values.service.port }}
+              containerPort: {{ .Values.service.port | default 80 }}
               protocol: TCP
           {{- if .Values.env }}
           env:
@@ -26,4 +29,3 @@ spec:
               value: {{ $value | quote }}
             {{- end }}
           {{- end }}
-
