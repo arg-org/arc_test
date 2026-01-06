@@ -1,0 +1,23 @@
+image:
+  repository: asia-northeast3-docker.pkg.dev/rs-2024-00460435-456102/hwgar/python-app
+  pullPolicy: IfNotPresent
+  tag: "0105T0910"
+
+service:
+  type: ClusterIP
+  port: 80
+
+ingress:
+  tls:
+    domain: hwtest.duckdns.org
+  enabled: true
+  annotations:
+    kubernetes.io/ingress.class: "gce"
+    kubernetes.io/ingress.global-static-ip-name: "test-static-ip"
+    networking.gke.io/managed-certificates: "test-app-cert"
+  defaultBackend:
+    service:
+      name: "pythonapp"
+      port:
+        number: 80
+
