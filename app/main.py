@@ -6,7 +6,7 @@ app = FastAPI()
 @app.get("/")
 def health():
     return {
-        "version": "OLD",
+        "version": "webhook_test",
         "env": os.getenv("ENV", "unknown"),
         "image": os.getenv("IMAGE", "unknown"),
     }
