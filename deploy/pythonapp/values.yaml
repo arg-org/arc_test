@@ -1,7 +1,7 @@
 image:
   repository: asia-northeast3-docker.pkg.dev/rs-2024-00460435-456102/hwgar/python-app
   pullPolicy: IfNotPresent
-  tag: "5ec932d04fcfae3d3bfcf61619a3fc35ac39b076"
+  tag: "aa2d9bf2d346896cddf80f7afb33d427e4898960"
 
 service:
   type: ClusterIP
