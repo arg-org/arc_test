@@ -6,7 +6,7 @@ app = FastAPI()
 @app.get("/")
 def health():
     return {
-        "version": "NEW",
+        "version": "OLD",
         "env": os.getenv("ENV", "unknown"),
         "image": os.getenv("IMAGE", "unknown"),
     }
