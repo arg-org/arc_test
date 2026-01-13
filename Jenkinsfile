@@ -1,10 +1,6 @@
 pipeline {
   agent any
 
-  triggers {
-    githubPush()
-  }
-  
   environment {
     IMAGE_NAME      = "python-app"
     GAR_REGISTRY    = "asia-northeast3-docker.pkg.dev"
