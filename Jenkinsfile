@@ -14,10 +14,6 @@ pipeline {
     GIT_PUSH_CRED    = "git-push-creds"  
   }
 
-  options {
-    timestamps()
-    disableConcurrentBuilds()
-  }
   
   stages {
     stage('Checkout') {
