@@ -42,24 +42,18 @@ pipeline {
 
   
   
-    // stage('Auth to GCP & Login GAR') {
-    //     steps {
-    //       withCredentials([file(credentialsId: "${env.GCP_SA_JSON_CRED}", variable: 'GCP_SA_KEY')]) {
-    //         sh '''
-    //           set -euxo pipefail
-
-    //           # gcloud 필요 (권장). 없으면 설치하거나, 다른 인증 방식 사용 필요.
-    //           gcloud --version
-
-    //           gcloud auth activate-service-account --key-file="$GCP_SA_KEY"
-    //           gcloud config set project "${GCP_PROJECT_ID}"
-
-    //           # Docker가 GAR에 접근하도록 설정
-    //           gcloud auth configure-docker "${GAR_REGISTRY}" -q
-    //         '''
-    //       }
-    //     }
-    //   }
+    stage('Auth to GCP & Login GAR') {
+        steps {
+          withCredentials([file(credentialsId: 'gcp-sa-json', variable: 'GCP_KEY')]) {
+          sh '''
+            gcloud auth activate-service-account --key-file="$GCP_KEY"
+            gcloud config set project "${GCP_PROJECT_ID}"
+            gcloud auth print-access-token | docker login \
+              -u oauth2accesstoken --password-stdin https://${GAR_REGISTRY}
+          '''
+          }
+        }
+    }
     
   }
 }
