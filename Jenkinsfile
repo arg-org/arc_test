@@ -23,17 +23,22 @@ pipeline {
       }
     }
   
-    stage('Ensure main branch') {
-        steps {
-          script {
-            def branch = sh(script: "git rev-parse --abbrev-ref HEAD", returnStdout: true).trim()
-            if (branch != "main") {
-              currentBuild.result = 'NOT_BUILT'
-              error("Not on main branch (current: ${branch}). This pipeline runs for main only.")
-            }
-          }
-        }
-      }
+   stage('Ensure main') {
+    steps {
+      sh '''
+        set -e
+        git fetch origin main --quiet
+        CUR=$(git rev-parse HEAD)
+        MAIN=$(git rev-parse origin/main)
+        if [ "$CUR" != "$MAIN" ]; then
+          echo "ERROR: Not on origin/main. current=$CUR main=$MAIN"
+          exit 1
+        fi
+        echo "OK: building origin/main ($CUR)"
+      '''
+    }
+  }
+
   
   
     stage('Auth to GCP & Login GAR') {
